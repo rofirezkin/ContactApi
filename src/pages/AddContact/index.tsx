@@ -21,7 +21,6 @@ const AddContact = ({navigation}: any) => {
   });
 
   const saveContactHandling = () => {
-    console.log('form ,', form);
     dispatch(saveContact({form, navigation}));
   };
 

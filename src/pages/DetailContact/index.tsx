@@ -18,7 +18,7 @@ const Contact = ({navigation, route}: any) => {
   useEffect(() => {
     dispatch(fetchDetailContact(param));
   }, [dispatch, param]);
-  console.log({detailContact});
+
   return (
     <SafeAreaView style={styles.homeView}>
       <Header onPress={() => navigation.goBack()} title="Detail Contact" />

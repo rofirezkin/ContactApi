@@ -46,7 +46,6 @@ export const saveContact = createAsyncThunk(
       photo: 'https://loremflickr.com/1234/2345/abstract',
     };
 
-    // console.log('desn dana ', sendData);
     const response = await api
       .post('/contact', sendData, {
         headers: {
@@ -54,7 +53,6 @@ export const saveContact = createAsyncThunk(
         },
       })
       .catch(err => {
-        console.log('err?.response?.status', err?.response?.status);
         let message = '';
         switch (err?.response?.status) {
           case 400:
@@ -89,9 +87,7 @@ export const saveContact = createAsyncThunk(
 export const fetchDetailContact = createAsyncThunk(
   'contact/detailContact',
   async (id: any, _) => {
-    // console.log('desn dana ', sendData);
     const response = await api.get(`/contact/${id}`).catch(err => {
-      console.log('err?.response?.status', err?.response?.status);
       let message = '';
       switch (err?.response?.status) {
         case 400:
@@ -129,7 +125,6 @@ export const editContact = createAsyncThunk(
       photo: data.form.photo,
     };
 
-    // console.log('desn dana ', sendData);
     const response: any = await api
       .put(`/contact/${data.id}`, sendData, {
         headers: {
@@ -137,7 +132,6 @@ export const editContact = createAsyncThunk(
         },
       })
       .catch(err => {
-        console.log('err?.response?.status', err?.response?.status);
         let message = '';
         switch (err?.response?.status) {
           case 400:
@@ -190,17 +184,13 @@ export const contactSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(saveContact.pending, (state, action) => {
-      console.log('data kedua pending ', action.payload);
-
       state.isLoading = true;
     });
     builder.addCase(saveContact.rejected, (state, action) => {
-      console.log('data kedua reject ', action.payload);
       state.isLoading = false;
     });
 
     builder.addCase(fetchDetailContact.fulfilled, (state, action) => {
-      console.log('full filledd ====', action.payload.data);
       state.detailContact = action.payload?.data;
       state.isLoading = false;
     });
@@ -211,12 +201,11 @@ export const contactSlice = createSlice({
       const isLargeNumber = (element: any) =>
         element.id === action?.payload?.id;
       const indexArray = state.contact.findIndex(isLargeNumber);
-      console.log('index array', indexArray);
+
       state.contact[indexArray] = action.payload;
       state.isLoading = false;
     });
     builder.addCase(editContact.pending, (state, action) => {
-      console.log('full [pendding] ====', action.payload);
       state.isLoading = true;
     });
   },
