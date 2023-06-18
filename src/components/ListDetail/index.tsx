@@ -1,27 +1,50 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {ICTwitter} from '../../assets/icon';
+import {
+  ICAge,
+  ICGmail,
+  ICImgTwitter,
+  ICMessage,
+  ICPhoneNumber,
+} from '../../assets/icon';
 import {fonts} from '../../utils/fonts';
 
-const List = ({onPress}: any) => {
+interface ListDetailProps {
+  type: 'twitter' | 'phone' | 'gmail' | 'age';
+  title: string;
+  desc: string;
+}
+
+const ListDetail = ({type, title, desc}: ListDetailProps) => {
+  const IconImage = () => {
+    if (type === 'twitter') {
+      return <ICImgTwitter />;
+    } else if (type === 'phone') {
+      return <ICPhoneNumber />;
+    } else if (type === 'gmail') {
+      return <ICGmail />;
+    } else if (type === 'age') {
+      return <ICAge />;
+    } else {
+      return <ICImgTwitter />;
+    }
+  };
+
   return (
-    <TouchableOpacity onPress={onPress} style={styles.listView}>
-      <Image
-        source={{uri: 'https://placeimg.com/640/480/people'}}
-        style={{width: 60, height: 60, borderRadius: 60 / 2}}
-      />
+    <View style={styles.listView}>
+      <IconImage />
       <View style={{flex: 1, marginLeft: 20}}>
-        <Text style={styles.title}>Rofi Rezkin</Text>
-        <Text style={styles.desc}>088573717171</Text>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.desc}>{desc}</Text>
       </View>
       <View style={{justifyContent: 'center'}}>
-        <ICTwitter />
+        <ICMessage />
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
-export default List;
+export default ListDetail;
 
 const styles = StyleSheet.create({
   listView: {
@@ -30,6 +53,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom: 20,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   title: {
     color: 'white',

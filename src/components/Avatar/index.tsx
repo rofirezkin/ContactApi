@@ -2,11 +2,16 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {fonts} from '../../utils/fonts';
 
-const Avatar = () => {
+const Avatar = ({data}) => {
   return (
     <View style={{alignItems: 'center'}}>
       <Image
-        source={{uri: 'https://placeimg.com/640/480/people'}}
+        source={{
+          uri:
+            data?.photo !== undefined
+              ? data?.photo
+              : 'https://placeimg.com/640/480/people',
+        }}
         style={{width: 110, height: 110, borderRadius: 110 / 2}}
       />
 
@@ -17,11 +22,11 @@ const Avatar = () => {
           fontSize: 20,
           marginTop: 10,
         }}>
-        Annye Mercury
+        {data?.firstName} {data?.lastName}
       </Text>
       <Text
         style={{color: 'white', fontFamily: fonts.primary[300], fontSize: 15}}>
-        Banten, Indonesia
+        {data ? 'Banten, Indonesia' : ''}
       </Text>
     </View>
   );

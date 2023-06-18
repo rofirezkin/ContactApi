@@ -3,7 +3,7 @@ import React from 'react';
 import {ICArrowLeft} from '../../assets/icon';
 import {fonts} from '../../utils/fonts';
 
-const Header = ({onPress}: any) => {
+const Header = ({onPress, title}: any) => {
   return (
     <TouchableOpacity onPress={onPress} style={{flexDirection: 'row'}}>
       <ICArrowLeft />
@@ -14,7 +14,7 @@ const Header = ({onPress}: any) => {
           fontSize: 20,
           marginLeft: 20,
         }}>
-        Detail Contact
+        {title}
       </Text>
     </TouchableOpacity>
   );

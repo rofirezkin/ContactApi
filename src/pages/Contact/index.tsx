@@ -1,40 +1,65 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useEffect} from 'react';
 import List from '../../components/List';
 import {fonts} from '../../utils/fonts';
 import Search from '../../components/Search';
 import Recent from '../../components/Recent';
 import Gap from '../../components/Gap';
 
-const Contact = ({navigation}) => {
+import {fetchContact} from '../../redux/contact/contactSlice';
+import {useAppDispatch, useAppSelector} from '../../redux/store';
+
+const Contact = ({navigation}: any) => {
+  const contact = useAppSelector(state => state.contact.contact);
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchContact());
+  }, [dispatch]);
+
   return (
     <SafeAreaView style={styles.homeView}>
       <View>
-        <Text style={styles.titleHeader}>My Contact</Text>
-        <Gap height={40} />
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Text style={styles.titleHeader}>My Contact</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('AddContact')}>
+            <Text style={styles.titleHeader}>+</Text>
+          </TouchableOpacity>
+        </View>
+        <Gap height={20} />
         <Search />
+        <Gap height={10} />
+        <Text style={styles.friendText}>Recent</Text>
         <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
-          <Recent />
-          <Gap width={20} />
-          <Recent />
-          <Gap width={20} />
-          <Recent />
-          <Gap width={20} />
-          <Recent />
-          <Gap width={20} />
-          <Recent />
-          <Gap width={20} />
-          <Recent />
+          {contact.map((res: any) => {
+            return (
+              <>
+                <Recent data={res} key={res.id} />
+                <Gap width={20} />
+              </>
+            );
+          })}
         </ScrollView>
       </View>
       <Gap height={20} />
-      <Text style={styles.friendText}>Friends (200)</Text>
-      <ScrollView>
-        <List onPress={() => navigation.navigate('DetailContact')} />
-        <List />
-        <List />
-        <List />
-        <List />
+      <Text style={styles.friendText}>Friends ({contact.length})</Text>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {contact.map((res: any) => {
+          return (
+            <List
+              key={res.id}
+              data={res}
+              onPress={() => navigation.navigate('DetailContact', res.id)}
+            />
+          );
+        })}
       </ScrollView>
     </SafeAreaView>
   );
@@ -57,6 +82,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     fontFamily: fonts.primary[900],
-    marginVertical: 15,
+    marginVertical: 10,
   },
 });
