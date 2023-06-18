@@ -1,16 +1,8 @@
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React, {useEffect} from 'react';
-import List from '../../components/List';
+
 import {fonts} from '../../utils/fonts';
-import Search from '../../components/Search';
-import Recent from '../../components/Recent';
+
 import Gap from '../../components/Gap';
 import Avatar from '../../components/Avatar';
 import Header from '../../components/Header';

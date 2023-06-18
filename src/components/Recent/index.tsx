@@ -3,9 +3,9 @@ import React from 'react';
 import {fonts} from '../../utils/fonts';
 import Gap from '../Gap';
 
-const Recent = ({data}) => {
+const Recent = ({data}: any) => {
   return (
-    <View style={{alignItems: 'center', flex: 1}}>
+    <View style={styles.recentView}>
       <Gap height={20} />
       <Image
         source={{
@@ -14,21 +14,22 @@ const Recent = ({data}) => {
               ? data?.photo
               : 'https://placeimg.com/640/480/people',
         }}
-        style={{width: 60, height: 60, borderRadius: 60 / 2}}
+        style={styles.image}
       />
-      <Text
-        style={{
-          color: 'white',
-          fontFamily: fonts.primary[700],
-          fontSize: 15,
-          marginTop: 8,
-        }}>
-        {data?.firstName}
-      </Text>
+      <Text style={styles.text}>{data?.firstName}</Text>
     </View>
   );
 };
 
 export default Recent;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  text: {
+    color: 'white',
+    fontFamily: fonts.primary[700],
+    fontSize: 15,
+    marginTop: 8,
+  },
+  recentView: {alignItems: 'center', flex: 1},
+  image: {width: 60, height: 60, borderRadius: 60 / 2},
+});

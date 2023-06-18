@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import Header from '../../components/Header';
 import Avatar from '../../components/Avatar';
@@ -7,10 +7,10 @@ import TextInput from '../../components/TextInput';
 import useForm from '../../components/hooks/useForm';
 import Button from '../../components/Button';
 
-import {useAppDispatch, useAppSelector} from '../../redux/store';
+import {useAppDispatch} from '../../redux/store';
 import {saveContact} from '../../redux/contact/contactSlice';
 
-const AddContact = ({navigation}) => {
+const AddContact = ({navigation}: any) => {
   const dispatch = useAppDispatch();
 
   const [form, setForm] = useForm({

@@ -9,7 +9,7 @@ import {
 import React, {useEffect} from 'react';
 import List from '../../components/List';
 import {fonts} from '../../utils/fonts';
-import Search from '../../components/Search';
+
 import Recent from '../../components/Recent';
 import Gap from '../../components/Gap';
 
@@ -34,7 +34,7 @@ const Contact = ({navigation}: any) => {
           </TouchableOpacity>
         </View>
         <Gap height={20} />
-        <Search />
+        {/* <Search /> */}
         <Gap height={10} />
         <Text style={styles.friendText}>Recent</Text>
         <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>

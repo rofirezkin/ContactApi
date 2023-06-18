@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import api from '../../constant/api';
 import {showMessage} from 'react-native-flash-message';
 
@@ -88,7 +88,7 @@ export const saveContact = createAsyncThunk(
 
 export const fetchDetailContact = createAsyncThunk(
   'contact/detailContact',
-  async (id: any, thunkAPI) => {
+  async (id: any, _) => {
     // console.log('desn dana ', sendData);
     const response = await api.get(`/contact/${id}`).catch(err => {
       console.log('err?.response?.status', err?.response?.status);
@@ -120,7 +120,7 @@ export const fetchDetailContact = createAsyncThunk(
 //
 
 export const editContact = createAsyncThunk(
-  'contact/save',
+  'contact/edit/save',
   async (data: any, thunkAPI) => {
     const sendData = {
       firstName: data?.form?.firstName,
@@ -130,8 +130,8 @@ export const editContact = createAsyncThunk(
     };
 
     // console.log('desn dana ', sendData);
-    const response = await api
-      .put(`/contact/${data.form.id}`, sendData, {
+    const response: any = await api
+      .put(`/contact/${data.id}`, sendData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -151,19 +151,25 @@ export const editContact = createAsyncThunk(
             break;
           default:
         }
+
         showMessage({
           message: message,
           type: 'danger',
         });
+        return thunkAPI.rejectWithValue(response);
       });
 
     if (!response) return thunkAPI.rejectWithValue(response);
     if (response) {
       showMessage({
-        message: 'sukses tambah data',
+        message: 'sukses edit data',
         type: 'success',
       });
-      data.navigation.goBack();
+      data.navigation.reset({
+        index: 0,
+        routes: [{name: 'Contact'}],
+      });
+      sendData.id = data.id;
       return sendData;
     }
   },
@@ -199,6 +205,18 @@ export const contactSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(fetchDetailContact.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(editContact.fulfilled, (state, action) => {
+      const isLargeNumber = (element: any) =>
+        element.id === action?.payload?.id;
+      const indexArray = state.contact.findIndex(isLargeNumber);
+      console.log('index array', indexArray);
+      state.contact[indexArray] = action.payload;
+      state.isLoading = false;
+    });
+    builder.addCase(editContact.pending, (state, action) => {
+      console.log('full [pendding] ====', action.payload);
       state.isLoading = true;
     });
   },

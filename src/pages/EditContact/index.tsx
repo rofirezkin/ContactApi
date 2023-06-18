@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import Header from '../../components/Header';
 import Avatar from '../../components/Avatar';
@@ -7,10 +7,10 @@ import TextInput from '../../components/TextInput';
 import useForm from '../../components/hooks/useForm';
 import Button from '../../components/Button';
 
-import {useAppDispatch, useAppSelector} from '../../redux/store';
-import {saveContact} from '../../redux/contact/contactSlice';
+import {useAppDispatch} from '../../redux/store';
+import {editContact} from '../../redux/contact/contactSlice';
 
-const EditContact = ({navigation, route}) => {
+const EditContact = ({navigation, route}: any) => {
   const detailParam = route.params;
   const dispatch = useAppDispatch();
 
@@ -21,10 +21,8 @@ const EditContact = ({navigation, route}) => {
     photo: detailParam.photo,
   });
 
-  console.log('dispac param', detailParam.age);
   const saveContactHandling = () => {
-    console.log('form ,', form);
-    dispatch(editContact({form, navigation}));
+    dispatch(editContact({form, navigation, id: detailParam.id}));
   };
 
   return (
